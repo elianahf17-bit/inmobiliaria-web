@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bienes Raíces y Peritaje Valuador | Asesoría Profesional</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Netlify Identity Widget para el inicio de sesión con clave -->
+  <!-- Netlify Identity Widget para gestión de contenido con Decap CMS -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body class="bg-neutral-50 text-neutral-800 font-sans">
@@ -188,6 +188,75 @@
     </div>
   </section>
 
+  <!-- SECCIÓN DE ASISTENTE VIRTUAL INTERACTIVO (CHAT IA) -->
+  <section id="asistente-ia" class="py-16 px-6 md:px-12 bg-neutral-900 text-white border-t border-neutral-800">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-8">
+        <span class="text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-2 block">Atención Inmediata 24/7</span>
+        <h2 class="text-3xl font-light tracking-tight">Conversa con nuestro Asistente Virtual</h2>
+        <p class="text-neutral-400 text-sm mt-2">Haz tus preguntas sobre avalúos técnicos, peritajes o venta de propiedades en Costa Rica.</p>
+      </div>
+
+      <!-- Contenedor Principal del Chat -->
+      <div class="bg-neutral-800 rounded-2xl border border-neutral-700 shadow-xl overflow-hidden flex flex-col h-[450px]">
+        
+        <!-- Encabezado del Chat -->
+        <div class="bg-neutral-950/60 p-4 border-b border-neutral-700 flex items-center gap-3">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-emerald-800 flex items-center justify-center font-bold text-white text-lg">
+              🤖
+            </div>
+            <span class="w-3 h-3 bg-emerald-500 rounded-full absolute bottom-0 right-0 border-2 border-neutral-900"></span>
+          </div>
+          <div>
+            <h3 class="font-semibold text-sm text-white">Asistente de Valuaciones & Inmobiliaria</h3>
+            <p class="text-xs text-neutral-400">Responde al instante</p>
+          </div>
+        </div>
+
+        <!-- Área de Conversación -->
+        <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4 bg-neutral-900/50">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-800/80 flex items-center justify-center text-xs shrink-0 mt-1">🤖</div>
+            <div class="bg-neutral-800 border border-neutral-700 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-neutral-200">
+              ¡Hola! 👋 Soy tu asistente de peritaje y bienes raíces. ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre avalúos para fincas, ganado, vehículos o cómo publicar tu propiedad.
+            </div>
+          </div>
+        </div>
+
+        <!-- Indicador de "Escribiendo..." -->
+        <div id="chat-loading" class="hidden px-6 py-2 bg-neutral-900/30 flex items-center gap-2 text-xs text-emerald-400">
+          <div class="flex space-x-1">
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+          </div>
+          <span>El asistente está redactando una respuesta...</span>
+        </div>
+
+        <!-- Escribir Mensaje -->
+        <form id="chat-form" class="p-4 bg-neutral-950/80 border-t border-neutral-700 flex gap-3">
+          <input 
+            type="text" 
+            id="chat-input" 
+            placeholder="Escribe tu consulta aquí..." 
+            required 
+            autocomplete="off"
+            class="flex-1 bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition placeholder-neutral-500"
+          >
+          <button 
+            type="submit" 
+            id="chat-send-btn"
+            class="bg-emerald-700 hover:bg-emerald-600 text-white font-medium px-6 py-3 rounded-xl text-sm transition flex items-center gap-2 shrink-0"
+          >
+            <span>Enviar</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
   <!-- SECCIÓN 4: CONTACTO -->
   <section id="contacto" class="py-20 px-6 md:px-12 bg-neutral-900 text-white">
     <div class="max-w-3xl mx-auto text-center">
@@ -232,5 +301,60 @@
     <p>&copy; 2026 Peritaje Valuador & Bienes Raíces. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- SCRIPT PARA FUNCIONAMIENTO DEL CHAT -->
+  <script>
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatLoading = document.getElementById('chat-loading');
+
+    chatForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const userMessage = chatInput.value.trim();
+      if (!userMessage) return;
+
+      // Mostrar el mensaje que escribió el usuario
+      appendMessage('user', userMessage);
+      chatInput.value = '';
+
+      // Mostrar el indicador de "Escribiendo..."
+      chatLoading.classList.remove('hidden');
+      scrollToBottom();
+
+      // Respuesta simulada inmediata mientras conectamos la IA por backend
+      setTimeout(() => {
+        chatLoading.classList.add('hidden');
+        appendMessage('assistant', '¡Gracias por tu mensaje! Estamos conectando este módulo a nuestro servidor. Para consultas urgentes sobre avalúos, puedes escribirnos directamente por el botón de WhatsApp.');
+        scrollToBottom();
+      }, 1200);
+    });
+
+    function appendMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex items-start gap-3 ' + (sender === 'user' ? 'justify-end' : '');
+
+      if (sender === 'assistant') {
+        msgDiv.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-emerald-800/80 flex items-center justify-center text-xs shrink-0 mt-1">🤖</div>
+          <div class="bg-neutral-800 border border-neutral-700 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-neutral-200">
+            ${text}
+          </div>
+        `;
+      } else {
+        msgDiv.innerHTML = `
+          <div class="bg-emerald-900/80 border border-emerald-700/60 p-4 rounded-2xl rounded-tr-none max-w-[85%] text-sm text-white">
+            ${text}
+          </div>
+          <div class="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs shrink-0 mt-1">👤</div>
+        `;
+      }
+
+      chatMessages.appendChild(msgDiv);
+    }
+
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  </script>
 </body>
 </html>
