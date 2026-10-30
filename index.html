@@ -32,9 +32,9 @@
     </div>
   </header>
 
-  <!-- Bloques -->
+  <!-- Bloques / Nuestro Enfoque -->
   <section id="metodo" class="py-16 px-6 md:px-12 bg-neutral-900 text-white border-t border-neutral-800">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="bg-neutral-800 p-8 rounded-2xl border border-neutral-700 shadow-sm hover:border-emerald-500/50 transition">
         <h3 class="text-xl font-bold text-white mb-3">¿Necesitas vender tu propiedad y quieres un avalúo para ofrecerla?</h3>
         <p class="text-neutral-300 text-sm leading-relaxed">Te acompañamos en todo el proceso. Realizamos la valoración real de tu finca, terreno, ganado o vehículo para vender con éxito.</p>
@@ -46,6 +46,10 @@
       <div class="bg-neutral-800 p-8 rounded-2xl border border-neutral-700 shadow-sm hover:border-emerald-500/50 transition">
         <h3 class="text-xl font-bold text-white mb-3">Transparencia y claridad</h3>
         <p class="text-neutral-300 text-sm leading-relaxed">Evaluación técnica completa de tu inmueble, terreno, vehículo o ganadería, con un desglose claro de precios ajustados al mercado actual y la asesoría profesional necesaria para negociar con total tranquilidad.</p>
+      </div>
+      <div class="bg-neutral-800 p-8 rounded-2xl border border-neutral-700 shadow-sm hover:border-emerald-500/50 transition">
+        <h3 class="text-xl font-bold text-white mb-3">Si desea comprar una propiedad le realizamos un análisis integral</h3>
+        <p class="text-neutral-300 text-sm leading-relaxed">Verificamos las condiciones técnicas y el valor real de mercado para garantizar una inversión segura y fundamentada.</p>
       </div>
     </div>
   </section>
@@ -232,7 +236,6 @@
 
   <script>
     /* ===== PROPIEDADES POR PROVINCIA ===== */
-    // Agrega aquí tus propiedades. "provincia" debe coincidir con el botón.
     const propiedades = [
       {
         provincia: 'Alajuela',
@@ -331,7 +334,6 @@
       }
     });
 
-    // Usa textContent para evitar inyección de HTML (XSS)
     function appendMessage(sender, text) {
       const msgDiv = document.createElement('div');
       const isUser = sender === 'user';
